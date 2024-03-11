@@ -1,9 +1,8 @@
 package ru.merkel.springemployeeaccounting.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
 import ru.merkel.springemployeeaccounting.services.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
@@ -16,8 +15,26 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping(path = "/add")
-    public String add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName){
-        return employeeService.add(firstName, lastName);
+    @PostMapping(path = "/add")
+    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName){
+
+        String response = employeeService.add(firstName, lastName);
+        return ResponseEntity.ok().body(response);
+//        String response = "";
+//        try {
+//            response = employeeService.add(firstName, lastName);
+//        } catch (EmployeeStorageIsFullException e) {
+//            e.getStackTrace();
+//            response = e.getMessage();
+//        }
+//        return response;
+
+//        EmployeeStorageIsFullException ex = new EmployeeStorageIsFullException();
+//        try {
+//            return employeeService.add(firstName, lastName);
+//        } catch (EmployeeStorageIsFullException e) {
+//            e.getStackTrace();
+//        }
+//        return ex.getMessage();
     }
 }

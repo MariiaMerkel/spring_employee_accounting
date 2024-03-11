@@ -1,10 +1,12 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import lombok.SneakyThrows;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
-import ru.merkel.springemployeeaccounting.services.Employee;
 
 import java.util.List;
 
@@ -17,8 +19,9 @@ public class EmployeeService {
         this.employees = employees;
     }
 
+    @SneakyThrows
     public String add(String firstName, String lastName) {
-        if (employees.size() > counter + 1) {
+        if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("Не хватает места для добавления нового сотрудника");
         }
         try {
@@ -31,6 +34,12 @@ public class EmployeeService {
                 System.out.printf("%nДанные о сотруднике %s %s не добавлены%n", firstName, lastName);
                 ex.getStackTrace();
             }
+        }
+
+        try {
+            throw new JsonParseException("sonParseException");
+        } catch (JsonParseException e) {
+            throw new RuntimeException(e);
         }
         return "Сотрудник добавлен";
     }
