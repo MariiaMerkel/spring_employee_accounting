@@ -16,45 +16,66 @@ public class EmployeeService {
         this.employees = employees;
     }
 
-    public String add(String firstName, String lastName) {
+    public Employee add(String firstName, String lastName) {
         if (employees.size() >= counter) {
-            throw new EmployeeStorageIsFullException("Не хватает места для добавления нового сотрудника");
+            throw new EmployeeStorageIsFullException("ArrayIsFull");
         }
-        try {
-            find(firstName, lastName);
+        if (check(firstName, lastName)) {
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть в списке");
-        } catch (EmployeeNotFoundException ex) {
-            try {
-                employees.add(new Employee(firstName, lastName));
-            } catch (RuntimeException rtex) {
-                System.out.printf("%nДанные о сотруднике %s %s не добавлены%n", firstName, lastName);
-                ex.getStackTrace();
-            }
         }
-        return "Сотрудник добавлен";
+        Employee e = new Employee(firstName, lastName);
+        employees.add(e);
+        return e;
     }
 
-    public void delete(String firstName, String lastName) {
-        try {
-            Employee employee = find(firstName, lastName);
-            employees.remove(employee);
-        } catch (EmployeeNotFoundException ex) {
-            ex.getStackTrace();
-        } catch (RuntimeException ex) {
-            System.out.println("\nПроизошла ошибка.");
-            ex.getStackTrace();
+    public Employee remove(String firstName, String lastName) {
+        Employee e = new Employee(firstName, lastName);
+        if(employees.remove(e)){
+            return e;
+        } else {
+            throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
     }
 
     public Employee find(String firstName, String lastName) {
-        try {
-            return (Employee) employees.stream().filter(e -> e.getFullName() == firstName + ' ' + lastName);
-        } catch (RuntimeException ex) {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+        int index = findIndex(firstName, lastName);
+        if (index != -1) {
+            return employees.get(index);
+        } else {
+            throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
     }
 
-    public void printAll() {
-        employees.forEach(System.out::println);
+    public int findIndex(String firstName, String lastName) {
+        int index = -1;
+        for (int i = 0; i <= employees.size(); i++) {
+            try {
+                Employee e = employees.get(i);
+                if (e.getFullName().equals(firstName + ' ' + lastName)) {
+                    index = i;
+                }
+            } catch (Exception ex) {
+                ex.getStackTrace();
+            }
+        }
+        return index;
+    }
+
+    public boolean check(String firstName, String lastName) {
+        for (int i = 0; i <= employees.size(); i++) {
+            try {
+                Employee e = employees.get(i);
+                if (e.getFullName().equals(firstName + ' ' + lastName)) {
+                    return true;
+                }
+            } catch (Exception ex) {
+                ex.getStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public List<Employee> findAll() {
+        return employees;
     }
 }

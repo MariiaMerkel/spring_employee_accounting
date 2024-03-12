@@ -26,7 +26,7 @@ public class Employee {
         }
 
         public String getFullName() {
-            return String.format("%s %s", this.getFirstName(), this.getLastName());
+            return getFirstName() + ' ' + getLastName();
         }
 
         public int getId() {
@@ -42,7 +42,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id && Objects.equals(getFullName(), employee.getFullName());
+        return Objects.equals(getFullName(), employee.getFullName());
     }
 
     @Override
