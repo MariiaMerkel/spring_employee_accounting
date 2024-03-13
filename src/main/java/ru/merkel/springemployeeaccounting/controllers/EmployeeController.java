@@ -1,7 +1,7 @@
 package ru.merkel.springemployeeaccounting.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.merkel.springemployeeaccounting.services.Employee;
+import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
 import java.util.List;
