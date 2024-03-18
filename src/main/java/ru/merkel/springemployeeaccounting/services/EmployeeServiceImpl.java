@@ -4,6 +4,9 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<String, Employee> findAll() {
-        return employees;
+    public Collection<Employee> findAll() {
+        return Collections.unmodifiableCollection(employees.values());
     }
 }

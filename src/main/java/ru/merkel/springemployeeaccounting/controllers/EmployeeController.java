@@ -6,6 +6,7 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeService.find(firstName, lastName));
     }
     @GetMapping(path = "/findAll")
-    public List<Employee> findAll() {
-        return new ArrayList<Employee>(employeeService.findAll().values());
+    public Collection<Employee> findAll() {
+        return employeeService.findAll();
     }
 }
