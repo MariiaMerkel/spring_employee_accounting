@@ -1,12 +1,9 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
-import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
-import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
+import ru.merkel.springemployeeaccounting.excaptions.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,40 +14,41 @@ public class EmployeeServiceImpl implements EmployeeService {
     private static int counter = 5;
 
     @Override
-    public Employee add(String firstName, String lastName) {
+    @SneakyThrows
+    public String add(String firstName, String lastName) {
         if (employees.size() >= counter) {
-            throw new EmployeeStorageIsFullException("ArrayIsFull");
+            throw new EmployeeStorageIsFullException("Список заполнен, добавлять новых сотрудников нельзя");
         }
         Employee e = new Employee(firstName, lastName);
-        Employee e2 = employees.put(e.getFullName(), e);
-        if (e2 != null) {
-            throw new EmployeeAlreadyAddedException("Сотрудник с именем " + e2.getFullName() + " уже есть в списке");
+        Employee added = employees.put(e.getFullName(), e);
+        if (added != null) {
+            throw new EmployeeAlreadyAddedException("Сотрудник с именем " + added.getFullName() + " уже есть в списке");
         }
-        return e;
+        return String.format("Добавлен новый сотрудник: %s.", e.getFullName());
     }
 
     @Override
-    public Employee remove(String firstName, String lastName) {
+    public String remove(String firstName, String lastName) {
         Employee e = new Employee(firstName, lastName);
-        try {
-            return employees.remove(e.getFullName());
-        } catch (Exception ex) {
+        Employee removed = employees.remove(e.getFullName());
+        if (removed == null) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
+        return String.format("Удалён сотрудник: %s.", removed.getFullName());
     }
 
     @Override
-    public Employee find(String firstName, String lastName) {
+    public String find(String firstName, String lastName) {
         Employee e = new Employee(firstName, lastName);
-        try {
-            return employees.get(e);
-        } catch (Exception ex) {
+        Employee found = employees.get(e.getFullName());
+        if (found == null) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
+        return found.toString();
     }
 
     @Override
-    public ArrayList<Employee> findAll() {
-        return new ArrayList<Employee>(employees.values());
+    public Map<String, Employee> findAll() {
+        return employees;
     }
 }

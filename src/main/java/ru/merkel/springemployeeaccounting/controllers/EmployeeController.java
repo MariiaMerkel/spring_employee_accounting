@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
@@ -18,21 +19,21 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add")
-    public Employee add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return employeeService.add(firstName, lastName);
+    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+        return ResponseEntity.ok().body(employeeService.add(firstName, lastName));
     }
 
     @GetMapping(path = "/remove")
-    public Employee remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return employeeService.remove(firstName, lastName);
+    public ResponseEntity<?> remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName));
     }
 
     @GetMapping(path = "/find")
-    public Employee find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return employeeService.find(firstName, lastName);
+    public ResponseEntity<?>  find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+        return ResponseEntity.ok().body(employeeService.find(firstName, lastName));
     }
     @GetMapping(path = "/findAll")
-    public ArrayList<Employee> findAll() {
-        return employeeService.findAll();
+    public List<Employee> findAll() {
+        return new ArrayList<Employee>(employeeService.findAll().values());
     }
 }
