@@ -24,7 +24,7 @@ public class Employee {
     }
 
     public String toString() {
-        return String.format("%d. ФИО сотрудника: %s.", this.getFullName());
+        return String.format("ФИО сотрудника: %s.", this.getFullName());
     }
 
     @Override

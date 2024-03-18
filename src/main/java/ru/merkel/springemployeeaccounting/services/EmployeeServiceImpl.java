@@ -5,12 +5,15 @@ import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedExcepti
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
 import ru.merkel.springemployeeaccounting.models.Employee;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    ArrayList<Employee> employees = new ArrayList<>();
+    private Map<String, Employee> employees = new HashMap<>();
     private static int counter = 5;
 
     @Override
@@ -18,50 +21,36 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("ArrayIsFull");
         }
-        if (check(firstName, lastName)) {
-            throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть в списке");
-        }
         Employee e = new Employee(firstName, lastName);
-        employees.add(e);
+        Employee e2 = employees.put(e.getFullName(), e);
+        if (e2 != null) {
+            throw new EmployeeAlreadyAddedException("Сотрудник с именем " + e2.getFullName() + " уже есть в списке");
+        }
         return e;
     }
 
     @Override
     public Employee remove(String firstName, String lastName) {
         Employee e = new Employee(firstName, lastName);
-        if (employees.remove(e)) {
-            return e;
-        } else {
+        try {
+            return employees.remove(e.getFullName());
+        } catch (Exception ex) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
     }
 
     @Override
     public Employee find(String firstName, String lastName) {
-        for (Employee e : employees) {
-            if (e.getFullName().equals(firstName + ' ' + lastName)) {
-                return e;
-            }
+        Employee e = new Employee(firstName, lastName);
+        try {
+            return employees.get(e);
+        } catch (Exception ex) {
+            throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
-        throw new EmployeeNotFoundException("Такой сотрудник не найден");
     }
 
     @Override
     public ArrayList<Employee> findAll() {
-        return employees;
-    }
-
-    public boolean check(String firstName, String lastName) {
-        for (int i = 0; i <= employees.size(); i++) {
-            try {
-                Employee e = employees.get(i);
-                if (e.getFullName().equals(firstName + ' ' + lastName)) {
-                    return true;
-                }
-            } catch (Exception ex) {
-                ex.getStackTrace();
-            }
-        }
-        return false;
+        return new ArrayList<Employee>(employees.values());
     }
 }

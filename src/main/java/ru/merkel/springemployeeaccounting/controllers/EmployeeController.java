@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="/employee")
@@ -30,7 +32,7 @@ public class EmployeeController {
         return employeeService.find(firstName, lastName);
     }
     @GetMapping(path = "/findAll")
-    public List<Employee> findAll() {
+    public ArrayList<Employee> findAll() {
         return employeeService.findAll();
     }
 }
