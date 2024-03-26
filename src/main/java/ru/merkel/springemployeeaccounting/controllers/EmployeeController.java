@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.controllers;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
@@ -13,9 +14,10 @@ import java.util.Map;
 @RestController
 @RequestMapping(value="/employee")
 public class EmployeeController {
+
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(@Qualifier("setBasedEmployeeServiceImpl") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

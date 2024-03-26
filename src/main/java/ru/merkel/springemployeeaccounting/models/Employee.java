@@ -19,4 +19,6 @@ public record Employee(String firstName, String lastName) {
         Employee employee = (Employee) o;
         return Objects.equals(getFullName(), employee.getFullName());
     }
+
+
 }
