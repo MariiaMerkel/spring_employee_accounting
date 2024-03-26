@@ -1,13 +1,13 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.models.Employee;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 public interface EmployeeService {
-    Employee add(String firstName, String lastName);
-    Employee remove(String firstName, String lastName);
-    Employee find(String firstName, String lastName);
-    ArrayList<Employee> findAll();
+    String add(String firstName, String lastName);
+    String remove(String firstName, String lastName);
+    String find(String firstName, String lastName);
+    Collection<Employee> findAll();
 }
