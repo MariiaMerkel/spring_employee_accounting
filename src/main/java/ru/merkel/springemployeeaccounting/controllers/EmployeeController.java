@@ -17,23 +17,23 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(@Qualifier("setBasedEmployeeServiceImpl") EmployeeService employeeService) {
+    public EmployeeController(@Qualifier("employeeServiceImpl") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping(path = "/add")
-    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.add(firstName, lastName));
+    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.add(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/remove")
-    public ResponseEntity<?> remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName));
+    public ResponseEntity<?> remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<?>  find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.find(firstName, lastName));
+    public ResponseEntity<?>  find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
     }
     @GetMapping(path = "/findAll")
     public Collection<Employee> findAll() {

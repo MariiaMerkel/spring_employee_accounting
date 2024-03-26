@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,11 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
     private static int counter = 5;
     @SneakyThrows
     @Override
-    public String add(String firstName, String lastName) {
+    public String add(String firstName, String lastName, Integer salary, Integer department) {
         if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("Список заполнен, добавлять новых сотрудников нельзя");
         }
-        Employee e = new Employee(firstName, lastName);
+        Employee e = new Employee(firstName, lastName, salary, department);
         boolean added = employees.add(e);
         if (!added) {
             throw new EmployeeAlreadyAddedException("Сотрудник с именем " + e.getFullName() + " уже есть в списке");
@@ -30,8 +31,8 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public String remove(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
+    public String remove(String firstName, String lastName, Integer salary, Integer department) {
+        Employee e = new Employee(firstName, lastName, salary, department);
         boolean removed = employees.remove(e);
         if (!removed) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
@@ -40,8 +41,8 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public String find(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
+    public String find(String firstName, String lastName, Integer salary, Integer department) {
+        Employee e = new Employee(firstName, lastName, salary, department);
         Optional<Employee> found = employees.stream().filter(employee -> employee.getFullName().equals(e.getFullName())).findFirst();
         if (found.isEmpty()) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");

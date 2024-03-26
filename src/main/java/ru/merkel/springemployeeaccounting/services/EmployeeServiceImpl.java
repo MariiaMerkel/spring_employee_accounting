@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @SneakyThrows
-    public String add(String firstName, String lastName) {
+    public String add(String firstName, String lastName, Integer salary, Integer department) {
         if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("Список заполнен, добавлять новых сотрудников нельзя");
         }
-        Employee e = new Employee(firstName, lastName);
+        Employee e = new Employee(firstName, lastName, salary, department);
         Employee added = employees.put(e.getFullName(), e);
         if (added != null) {
             throw new EmployeeAlreadyAddedException("Сотрудник с именем " + added.getFullName() + " уже есть в списке");
@@ -30,8 +31,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String remove(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
+    @SneakyThrows
+    public String remove(String firstName, String lastName, Integer salary, Integer department) {
+        Employee e = new Employee(firstName, lastName, salary, department);
         Employee removed = employees.remove(e.getFullName());
         if (removed == null) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
@@ -40,8 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String find(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
+    @SneakyThrows
+    public String find(String firstName, String lastName, Integer salary, Integer department) {
+        Employee e = new Employee(firstName, lastName, salary, department);
         Employee found = employees.get(e.getFullName());
         if (found == null) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
@@ -50,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @SneakyThrows
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees.values());
     }
