@@ -1,8 +1,6 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.SneakyThrows;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
@@ -10,12 +8,14 @@ import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullExcept
 import ru.merkel.springemployeeaccounting.models.Employee;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class SetBasedEmployeeServiceImpl implements EmployeeService{
+public class SetBasedEmployeeServiceImpl implements EmployeeService {
 
     private Set<Employee> employees = new HashSet<>();
     private static int counter = 5;
+
     @SneakyThrows
     @Override
     public String add(String firstName, String lastName, Integer salary, Integer department) {
@@ -30,6 +30,7 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
         return String.format("Добавлен новый сотрудник: %s.", e.getFullName());
     }
 
+    @SneakyThrows
     @Override
     public String remove(String firstName, String lastName, Integer salary, Integer department) {
         Employee e = new Employee(firstName, lastName, salary, department);
@@ -40,6 +41,7 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
         return String.format("Удалён сотрудник: %s.", e.getFullName());
     }
 
+    @SneakyThrows
     @Override
     public String find(String firstName, String lastName, Integer salary, Integer department) {
         Employee e = new Employee(firstName, lastName, salary, department);
@@ -50,6 +52,22 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService{
         return found.toString();
     }
 
+
+    @SneakyThrows
+    @Override
+    public String findByMaxSalaryOfDepartment(Integer department) {
+        Set<Employee> employeesDep = findByDepartment(department);
+        Employee employee = employeesDep.stream().max(Comparator.comparing(Employee::getSalary)).get();
+        return String.format("Сотрудник с наибольшей зарплатой отдела №%d: %s", department, employee);
+    }
+
+    @SneakyThrows
+    @Override
+    public Set<Employee> findByDepartment(Integer department) {
+        return employees.stream().filter(e -> e.getDepartment() == department).collect(Collectors.toSet());
+    }
+
+    @SneakyThrows
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees);

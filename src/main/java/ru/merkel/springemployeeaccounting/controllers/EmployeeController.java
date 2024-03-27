@@ -17,7 +17,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(@Qualifier("employeeServiceImpl") EmployeeService employeeService) {
+    public EmployeeController(@Qualifier("setBasedEmployeeServiceImpl") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -32,9 +32,15 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<?>  find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+    public ResponseEntity<?> find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
         return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
     }
+
+    @GetMapping(path = "/findByMaxSalaryOfDepartment")
+    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam("department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.findByMaxSalaryOfDepartment(department));
+    }
+
     @GetMapping(path = "/findAll")
     public Collection<Employee> findAll() {
         return employeeService.findAll();

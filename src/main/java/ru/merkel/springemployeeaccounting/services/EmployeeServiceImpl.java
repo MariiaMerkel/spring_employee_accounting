@@ -53,6 +53,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public String findByMaxSalaryOfDepartment(Integer department) {
+        return null;
+    }
+
+    @Override
+    public Set<Employee> findByDepartment(Integer department) {
+        return null;
+    }
+
+    @Override
     @SneakyThrows
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees.values());
