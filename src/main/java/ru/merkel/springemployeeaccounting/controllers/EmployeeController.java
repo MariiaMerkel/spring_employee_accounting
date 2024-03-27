@@ -22,21 +22,18 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add")
-    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.add(firstName, lastName));
+    public ResponseEntity<?> add(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.add(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/remove")
-    public ResponseEntity<?> remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName));
+    public ResponseEntity<?> remove(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<?>  find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return ResponseEntity.ok().body(employeeService.find(firstName, lastName));
+    public ResponseEntity<?> find(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
     }
-    @GetMapping(path = "/findAll")
-    public Collection<Employee> findAll() {
-        return employeeService.findAll();
-    }
+
 }
