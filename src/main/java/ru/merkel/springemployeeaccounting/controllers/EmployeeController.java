@@ -40,6 +40,10 @@ public class EmployeeController {
     public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam("department") Integer department) {
         return ResponseEntity.ok().body(employeeService.findByMaxSalaryOfDepartment(department));
     }
+    @GetMapping(path = "/findByMinSalaryOfDepartment")
+    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam("department") Integer department) {
+        return ResponseEntity.ok().body(employeeService.findByMinSalaryOfDepartment(department));
+    }
 
     @GetMapping(path = "/findAll")
     public Collection<Employee> findAll() {

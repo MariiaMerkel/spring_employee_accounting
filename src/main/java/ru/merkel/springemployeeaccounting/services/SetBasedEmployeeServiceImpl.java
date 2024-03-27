@@ -52,12 +52,19 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
         return found.toString();
     }
 
-
     @SneakyThrows
     @Override
     public String findByMaxSalaryOfDepartment(Integer department) {
         Set<Employee> employeesDep = findByDepartment(department);
         Employee employee = employeesDep.stream().max(Comparator.comparing(Employee::getSalary)).get();
+        return String.format("Сотрудник с наибольшей зарплатой отдела №%d: %s", department, employee);
+    }
+
+    @SneakyThrows
+    @Override
+    public String findByMinSalaryOfDepartment(Integer department) {
+        Set<Employee> employeesDep = findByDepartment(department);
+        Employee employee = employeesDep.stream().min(Comparator.comparing(Employee::getSalary)).get();
         return String.format("Сотрудник с наибольшей зарплатой отдела №%d: %s", department, employee);
     }
 
