@@ -9,8 +9,11 @@ import java.util.stream.Collectors;
 @Service
 public class SetBasedDepartmentServiceImpl implements DepartmentService {
 
-    private final Set<Employee> employees = new HashSet<>();
-    private static final int COUNTER = 5;
+    private SetBasedEmployeeServiceImpl employeeService;
+
+    public SetBasedDepartmentServiceImpl(SetBasedEmployeeServiceImpl employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @SneakyThrows
     @Override
@@ -31,17 +34,17 @@ public class SetBasedDepartmentServiceImpl implements DepartmentService {
     @SneakyThrows
     @Override
     public Set<Employee> findByDepartment(Integer department) {
-        return employees.stream().filter(e -> e.getDepartment() == department).collect(Collectors.toSet());
+        return employeeService.findAll().stream().filter(e -> e.getDepartment() == department).collect(Collectors.toSet());
     }
 
     @SneakyThrows
     @Override
     public Collection<List<Employee>> findAll(Integer department) {
         if (department == null) {
-            Map<Integer, List<Employee>> groupedByDep = employees.stream().collect(Collectors.groupingBy(Employee::getDepartment));
+            Map<Integer, List<Employee>> groupedByDep = employeeService.findAll().stream().collect(Collectors.groupingBy(Employee::getDepartment));
             return Collections.unmodifiableCollection(groupedByDep.values());
         } else {
-            Map<Integer, List<Employee>> groupedByDep = employees.stream().filter(e -> e.getDepartment() == department).collect(Collectors.groupingBy(Employee::getDepartment));
+            Map<Integer, List<Employee>> groupedByDep = employeeService.findAll().stream().filter(e -> e.getDepartment() == department).collect(Collectors.groupingBy(Employee::getDepartment));
             return Collections.unmodifiableCollection(groupedByDep.values());
         }
     }

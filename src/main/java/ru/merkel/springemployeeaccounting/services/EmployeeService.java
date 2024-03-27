@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import lombok.SneakyThrows;
 import ru.merkel.springemployeeaccounting.models.Employee;
 
 import java.util.Collection;
@@ -10,5 +11,5 @@ public interface EmployeeService {
     String add(String firstName, String lastName, Integer salary, Integer department);
     String remove(String firstName, String lastName, Integer salary, Integer department);
     String find(String firstName, String lastName, Integer salary, Integer department);
-
+    Collection<Employee> findAll();
 }

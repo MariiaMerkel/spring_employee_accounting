@@ -50,4 +50,10 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
         return found.toString();
     }
 
+    @SneakyThrows
+    @Override
+    public Collection<Employee> findAll() {
+        return Collections.unmodifiableCollection(employees);
+    }
+
 }
