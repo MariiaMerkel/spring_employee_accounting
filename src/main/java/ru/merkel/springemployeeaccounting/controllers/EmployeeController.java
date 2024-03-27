@@ -36,16 +36,4 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
     }
 
-    @GetMapping(path = "/max-salary")
-    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
-        return ResponseEntity.ok().body(employeeService.findByMaxSalaryOfDepartment(department));
-    }
-    @GetMapping(path = "/min-salary")
-    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
-        return ResponseEntity.ok().body(employeeService.findByMinSalaryOfDepartment(department));
-    }
-    @GetMapping(path = "/all")
-    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
-        return ResponseEntity.ok().body(employeeService.findAll(department));
-    }
 }
