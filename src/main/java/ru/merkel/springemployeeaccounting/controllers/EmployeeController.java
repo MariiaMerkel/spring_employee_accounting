@@ -22,31 +22,30 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add")
-    public ResponseEntity<?> add(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+    public ResponseEntity<?> add(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
         return ResponseEntity.ok().body(employeeService.add(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/remove")
-    public ResponseEntity<?> remove(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+    public ResponseEntity<?> remove(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
         return ResponseEntity.ok().body(employeeService.remove(firstName, lastName, salary, department));
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<?> find(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("salary") Integer salary, @RequestParam("department") Integer department) {
+    public ResponseEntity<?> find(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
         return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
     }
 
-    @GetMapping(path = "/findByMaxSalaryOfDepartment")
-    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/max-salary")
+    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
         return ResponseEntity.ok().body(employeeService.findByMaxSalaryOfDepartment(department));
     }
-    @GetMapping(path = "/findByMinSalaryOfDepartment")
-    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/min-salary")
+    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
         return ResponseEntity.ok().body(employeeService.findByMinSalaryOfDepartment(department));
     }
-
-    @GetMapping(path = "/findAll")
-    public Collection<Employee> findAll() {
-        return employeeService.findAll();
+    @GetMapping(path = "/all")
+    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
+        return ResponseEntity.ok().body(employeeService.findAll(department));
     }
 }

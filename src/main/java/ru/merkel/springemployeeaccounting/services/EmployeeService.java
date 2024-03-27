@@ -1,10 +1,9 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import lombok.SneakyThrows;
 import ru.merkel.springemployeeaccounting.models.Employee;
 
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 public interface EmployeeService {
@@ -14,5 +13,5 @@ public interface EmployeeService {
     String findByMaxSalaryOfDepartment(Integer department);
     String findByMinSalaryOfDepartment(Integer department);
     Set<Employee> findByDepartment(Integer department);
-    Collection<Employee> findAll();
+    Collection<List<Employee>> findAll(Integer department);
 }
