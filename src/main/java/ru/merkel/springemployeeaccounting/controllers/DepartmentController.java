@@ -25,7 +25,11 @@ public class DepartmentController {
         return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(department));
     }
     @GetMapping(path = "/all")
-    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
-        return ResponseEntity.ok().body(departmentService.findAll(department));
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok().body(departmentService.findAll());
+    }
+    @GetMapping(path = "/all", params = "departmentId")
+    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId") Integer department) {
+        return ResponseEntity.ok().body(departmentService.findByDepartment(department));
     }
 }

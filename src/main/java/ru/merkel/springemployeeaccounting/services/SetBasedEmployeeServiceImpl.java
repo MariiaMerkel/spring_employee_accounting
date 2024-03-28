@@ -1,6 +1,5 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
@@ -14,7 +13,6 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
     private final Set<Employee> employees = new HashSet<>();
     private static final int COUNTER = 5;
 
-    @SneakyThrows
     @Override
     public String add(String firstName, String lastName, Integer salary, Integer department) {
         if (employees.size() >= COUNTER) {
@@ -28,7 +26,6 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
         return String.format("Добавлен новый сотрудник: %s.", e.getFullName());
     }
 
-    @SneakyThrows
     @Override
     public String remove(String firstName, String lastName, Integer salary, Integer department) {
         Employee e = new Employee(firstName, lastName, salary, department);
@@ -39,7 +36,6 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
         return String.format("Удалён сотрудник: %s.", e.getFullName());
     }
 
-    @SneakyThrows
     @Override
     public String find(String firstName, String lastName, Integer salary, Integer department) {
         Employee e = new Employee(firstName, lastName, salary, department);
@@ -50,7 +46,6 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
         return found.toString();
     }
 
-    @SneakyThrows
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees);
