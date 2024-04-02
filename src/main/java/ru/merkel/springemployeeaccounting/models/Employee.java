@@ -26,6 +26,18 @@ public class Employee {
         return NUMBER_FORMAT.format(salary);
     }
 
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
+
     public String toString() {
         return String.format("ФИО сотрудника: %s, отдел: %d, зарплата: %s.", this.getFullName(), department, getSalary());
     }

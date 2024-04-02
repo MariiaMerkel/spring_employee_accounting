@@ -27,13 +27,13 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/remove")
-    public ResponseEntity<?> remove(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
-        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName, salary, department));
+    public ResponseEntity<?> remove(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
+        return ResponseEntity.ok().body(employeeService.remove(firstName, lastName));
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<?> find(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName, @RequestParam(value = "salary") Integer salary, @RequestParam(value = "department") Integer department) {
-        return ResponseEntity.ok().body(employeeService.find(firstName, lastName, salary, department));
+    public ResponseEntity<?> find(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
+        return ResponseEntity.ok().body(employeeService.find(firstName, lastName));
     }
 
 }
