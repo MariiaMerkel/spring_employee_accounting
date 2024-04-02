@@ -1,12 +1,15 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
 import ru.merkel.springemployeeaccounting.models.Employee;
+
 import java.util.*;
 
+@Primary
 @Service
 public class SetBasedEmployeeServiceImpl implements EmployeeService {
 
@@ -27,23 +30,27 @@ public class SetBasedEmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String remove(String firstName, String lastName, Integer salary, Integer department) {
-        Employee e = new Employee(firstName, lastName, salary, department);
-        boolean removed = employees.remove(e);
-        if (!removed) {
-            throw new EmployeeNotFoundException("Такой сотрудник не найден");
+    public String remove(String firstName, String lastName) {
+        Iterator<Employee> i = employees.iterator();
+        while (i.hasNext()) {
+            if (i.next().getFullName().equals(firstName + ' ' + lastName)) {
+                i.remove();
+                return String.format("Удалён сотрудник: %s.", firstName + ' ' + lastName);
+            }
         }
-        return String.format("Удалён сотрудник: %s.", e.getFullName());
+        throw new EmployeeNotFoundException("Такой сотрудник не найден");
     }
 
     @Override
-    public String find(String firstName, String lastName, Integer salary, Integer department) {
-        Employee e = new Employee(firstName, lastName, salary, department);
-        Optional<Employee> found = employees.stream().filter(employee -> employee.getFullName().equals(e.getFullName())).findFirst();
-        if (found.isEmpty()) {
-            throw new EmployeeNotFoundException("Такой сотрудник не найден");
+    public String find(String firstName, String lastName) {
+        Iterator<Employee> i = employees.iterator();
+        while (i.hasNext()) {
+            Employee e = i.next();
+            if (e.getFullName().equals(firstName + ' ' + lastName)) {
+                return e.toString();
+            }
         }
-        return found.toString();
+        throw new EmployeeNotFoundException("Такой сотрудник не найден");
     }
 
     @Override

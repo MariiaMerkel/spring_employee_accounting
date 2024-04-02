@@ -1,19 +1,21 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.models.Employee;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@Primary
 @Service
-public class SetBasedDepartmentServiceImpl implements DepartmentService {
+public class MapBasedDepartmentServiceImpl implements DepartmentService{
 
-    private final SetBasedEmployeeServiceImpl employeeService;
+    private final MapBasedEmployeeServiceImpl employeeService;
 
-    public SetBasedDepartmentServiceImpl(SetBasedEmployeeServiceImpl employeeService) {
+    public MapBasedDepartmentServiceImpl(MapBasedEmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 

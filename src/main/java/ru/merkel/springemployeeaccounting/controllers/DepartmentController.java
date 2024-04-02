@@ -17,11 +17,11 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
     @GetMapping(path = "/max-salary")
-    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
+    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam(value = "departmentId") Integer department) {
         return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(department));
     }
     @GetMapping(path = "/min-salary")
-    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam(value = "department") Integer department) {
+    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam(value = "departmentId") Integer department) {
         return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(department));
     }
     @GetMapping(path = "/all")
