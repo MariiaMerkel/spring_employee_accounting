@@ -9,7 +9,6 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 
 import java.util.*;
 
-@Primary
 @Service
 public class SetBasedEmployeeServiceImpl implements EmployeeService {
 

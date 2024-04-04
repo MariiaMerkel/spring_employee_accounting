@@ -7,7 +7,6 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Primary
 @Service
 public class SetBasedDepartmentServiceImpl implements DepartmentService {
 
