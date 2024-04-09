@@ -13,7 +13,7 @@ import ru.merkel.springemployeeaccounting.services.DepartmentService;
 public class DepartmentController {
     private final DepartmentService departmentService;
 
-    public DepartmentController(@Qualifier("setBasedDepartmentServiceImpl") DepartmentService departmentService) {
+    public DepartmentController(@Qualifier("mapBasedDepartmentServiceImpl") DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
     @GetMapping(path = "/max-salary")

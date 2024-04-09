@@ -23,7 +23,13 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<?> handlerRuntimeException(EmployeeInvalidate ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<?> handlerRuntimeException(Exception ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
 }

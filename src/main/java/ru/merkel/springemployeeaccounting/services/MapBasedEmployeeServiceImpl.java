@@ -1,5 +1,6 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.*;
@@ -17,12 +18,17 @@ public class MapBasedEmployeeServiceImpl implements EmployeeService {
         if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("Список заполнен, добавлять новых сотрудников нельзя");
         }
-        Employee e = new Employee(firstName, lastName, salary, department);
-        Employee added = employees.put(e.getFullName(), e);
-        if (added != null) {
-            throw new EmployeeAlreadyAddedException("Сотрудник с именем " + added.getFullName() + " уже есть в списке");
+        if(!StringUtils.isEmpty(firstName) && !StringUtils.isEmpty(lastName) && StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)){
+            Employee e = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, department);
+            Employee added = employees.put(e.getFullName(), e);
+            if (added != null) {
+                throw new EmployeeAlreadyAddedException("Сотрудник с именем " + added.getFullName() + " уже есть в списке");
+            }
+            return String.format("Добавлен новый сотрудник: %s.", e.getFullName());
+        } else {
+            throw new EmployeeInvalidate("Некорректное Имя или фамилия");
         }
-        return String.format("Добавлен новый сотрудник: %s.", e.getFullName());
+
     }
 
     @Override
