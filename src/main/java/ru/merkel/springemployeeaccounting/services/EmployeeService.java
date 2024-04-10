@@ -11,5 +11,6 @@ public interface EmployeeService {
     String add(String firstName, String lastName, Integer salary, Integer department);
     String remove(String firstName, String lastName);
     String find(String firstName, String lastName);
+    String validateName(String firstName, String lastName);
     Collection<Employee> findAll();
 }

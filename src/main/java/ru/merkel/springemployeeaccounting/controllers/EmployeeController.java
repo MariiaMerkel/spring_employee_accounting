@@ -17,7 +17,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(@Qualifier("mapBasedEmployeeServiceImpl") EmployeeService employeeService) {
+    public EmployeeController(@Qualifier("setBasedEmployeeServiceImpl") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
