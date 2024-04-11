@@ -1,6 +1,8 @@
 package ru.merkel.springemployeeaccounting.models;
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.NumberFormat;
 
 @Data
@@ -12,8 +14,8 @@ public class Employee {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getCurrencyInstance();
 
     public Employee(String firstName, String lastName, Integer salary, Integer department) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = StringUtils.capitalize(firstName.toLowerCase());
+        this.lastName = StringUtils.capitalize(lastName.toLowerCase());
         this.salary = salary;
         this.department = department;
     }
