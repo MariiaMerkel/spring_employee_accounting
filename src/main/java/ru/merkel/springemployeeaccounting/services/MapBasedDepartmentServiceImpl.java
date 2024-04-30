@@ -1,8 +1,5 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.models.Employee;
@@ -13,18 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 public class MapBasedDepartmentServiceImpl implements DepartmentService{
 
-    private EmployeeService employeeService;
+    private final MapBasedEmployeeServiceImpl employeeService;
 
-//    public MapBasedDepartmentServiceImpl() {
-//    }
-
-//    public MapBasedDepartmentServiceImpl(EmployeeService employeeService) {
-//        this.employeeService = employeeService;
-//    }
+    public MapBasedDepartmentServiceImpl(MapBasedEmployeeServiceImpl employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @Override
     public String findByMaxSalaryOfDepartment(Integer department) {
