@@ -2,10 +2,7 @@ package ru.merkel.springemployeeaccounting.controllers;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.merkel.springemployeeaccounting.services.DepartmentService;
 
 @RestController
@@ -16,20 +13,20 @@ public class DepartmentController {
     public DepartmentController(@Qualifier("mapBasedDepartmentServiceImpl") DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
-    @GetMapping(path = "/max-salary")
-    public ResponseEntity<?> findByMaxSalaryOfDepartment(@RequestParam(value = "departmentId") Integer department) {
-        return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(department));
+    @GetMapping(path = "/max-salary/{departmentId}")
+    public ResponseEntity<?> findByMaxSalaryOfDepartment(@PathVariable Integer departmentId) {
+        return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(departmentId));
     }
-    @GetMapping(path = "/min-salary")
-    public ResponseEntity<?> findByMinSalaryOfDepartment(@RequestParam(value = "departmentId") Integer department) {
-        return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(department));
+    @GetMapping(path = "/min-salary/{departmentId}")
+    public ResponseEntity<?> findByMinSalaryOfDepartment(@PathVariable Integer departmentId) {
+        return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(departmentId));
     }
     @GetMapping(path = "/all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok().body(departmentService.findAll());
     }
-    @GetMapping(path = "/all", params = "departmentId")
-    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId",required = false) Integer department) {
-        return ResponseEntity.ok().body(departmentService.findByDepartment(department));
+    @GetMapping(path = "/all/{departmentId}")
+    public ResponseEntity<?> findByDepartment(@PathVariable(required = false) Integer departmentId) {
+        return ResponseEntity.ok().body(departmentService.findByDepartment(departmentId));
     }
 }
