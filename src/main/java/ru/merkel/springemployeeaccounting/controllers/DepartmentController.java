@@ -13,7 +13,7 @@ import ru.merkel.springemployeeaccounting.services.DepartmentService;
 public class DepartmentController {
     private final DepartmentService departmentService;
 
-    public DepartmentController(@Qualifier("setBasedDepartmentServiceImpl") DepartmentService departmentService) {
+    public DepartmentController(@Qualifier("mapBasedDepartmentServiceImpl") DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
     @GetMapping(path = "/max-salary")
@@ -29,7 +29,7 @@ public class DepartmentController {
         return ResponseEntity.ok().body(departmentService.findAll());
     }
     @GetMapping(path = "/all", params = "departmentId")
-    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId") Integer department) {
+    public ResponseEntity<?> findByDepartment(@RequestParam(value = "departmentId",required = false) Integer department) {
         return ResponseEntity.ok().body(departmentService.findByDepartment(department));
     }
 }
