@@ -11,7 +11,7 @@ import java.util.*;
 @Primary
 @Slf4j
 @Service
-public class MapBasedEmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     private Map<String, Employee> employees = new HashMap<>();
     private static int counter = 5;
 

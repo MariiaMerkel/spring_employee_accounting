@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Service
 public class MapBasedDepartmentServiceImpl implements DepartmentService{
 
-    private final MapBasedEmployeeServiceImpl employeeService;
+    private final EmployeeServiceImpl employeeService;
 
-    public MapBasedDepartmentServiceImpl(MapBasedEmployeeServiceImpl employeeService) {
+    public MapBasedDepartmentServiceImpl(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
