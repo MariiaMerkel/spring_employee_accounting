@@ -13,20 +13,26 @@ public class DepartmentController {
     public DepartmentController(@Qualifier("mapBasedDepartmentServiceImpl") DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
-    @GetMapping(path = "/max-salary/{departmentId}")
-    public ResponseEntity<?> findByMaxSalaryOfDepartment(@PathVariable Integer departmentId) {
-        return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(departmentId));
+
+    @GetMapping(path = "/{id}/salary/sum")
+    public ResponseEntity<?> sumSalaryOfDepartment(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(departmentService.sumSalaryOfDepartment(id));
     }
-    @GetMapping(path = "/min-salary/{departmentId}")
-    public ResponseEntity<?> findByMinSalaryOfDepartment(@PathVariable Integer departmentId) {
-        return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(departmentId));
+    @GetMapping(path = "/{id}/salary/max")
+    public ResponseEntity<?> findByMaxSalaryOfDepartment(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(id));
     }
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/{id}/salary/min")
+    public ResponseEntity<?> findByMinSalaryOfDepartment(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(id));
+    }
+    @GetMapping(path = "/employees")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok().body(departmentService.findAll());
     }
-    @GetMapping(path = "/all/{departmentId}")
-    public ResponseEntity<?> findByDepartment(@PathVariable(required = false) Integer departmentId) {
-        return ResponseEntity.ok().body(departmentService.findByDepartment(departmentId));
+
+    @GetMapping(path = "/{id}/employees")
+    public ResponseEntity<?> findByDepartment(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(departmentService.findByDepartment(id));
     }
 }

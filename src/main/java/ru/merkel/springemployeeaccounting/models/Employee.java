@@ -1,6 +1,8 @@
 package ru.merkel.springemployeeaccounting.models;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.Data;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
@@ -9,6 +11,7 @@ import java.text.NumberFormat;
 public class Employee {
     private final String firstName;
     private final String lastName;
+    @Getter
     private Integer salary;
     private Integer department;
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getCurrencyInstance();
@@ -24,7 +27,7 @@ public class Employee {
         return firstName + ' ' + lastName;
     }
 
-    public String getSalary() {
+    public String getSalaryStringFormat() {
         return NUMBER_FORMAT.format(salary);
     }
 
@@ -41,6 +44,6 @@ public class Employee {
     }
 
     public String toString() {
-        return String.format("ФИО сотрудника: %s, отдел: %d, зарплата: %s.", this.getFullName(), department, getSalary());
+        return String.format("ФИО сотрудника: %s, отдел: %d, зарплата: %s.", this.getFullName(), department, getSalaryStringFormat());
     }
 }
