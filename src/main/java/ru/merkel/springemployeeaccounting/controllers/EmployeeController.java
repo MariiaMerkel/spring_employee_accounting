@@ -3,6 +3,7 @@ package ru.merkel.springemployeeaccounting.controllers;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
 @RestController
@@ -16,8 +17,8 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add/{firstName}/{lastName}/{salary}/{departmentId}")
-    public ResponseEntity<?> add(@PathVariable String firstName, @PathVariable String lastName, @PathVariable Integer salary, @PathVariable Integer departmentId) {
-        return ResponseEntity.ok().body(employeeService.add(firstName, lastName, salary, departmentId));
+    public Employee add(@PathVariable String firstName, @PathVariable String lastName, @PathVariable Integer salary, @PathVariable Integer departmentId) {
+        return employeeService.add(firstName, lastName, salary, departmentId);
     }
 
     @GetMapping(path = "/remove/{firstName}/{lastName}")
