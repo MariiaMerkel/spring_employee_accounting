@@ -20,7 +20,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.size() >= counter) {
             throw new EmployeeStorageIsFullException("Список заполнен, добавлять новых сотрудников нельзя");
         }
-        String key = validateName(firstName, lastName);
         Employee e = new Employee(firstName, lastName, salary, department);
         Employee added = employees.put(e.getFullName(), e);
         if (added != null) {

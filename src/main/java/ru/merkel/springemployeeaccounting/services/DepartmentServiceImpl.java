@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
-public class MapBasedDepartmentServiceImpl implements DepartmentService{
+public class DepartmentServiceImpl implements DepartmentService{
 
     private final EmployeeServiceImpl employeeService;
 
-    public MapBasedDepartmentServiceImpl(EmployeeServiceImpl employeeService) {
+    public DepartmentServiceImpl(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
