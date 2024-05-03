@@ -1,13 +1,21 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.merkel.springemployeeaccounting.models.Employee;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static ru.merkel.springemployeeaccounting.constants.ConstantsForTests.*;
 
@@ -20,36 +28,39 @@ class DepartmentServiceImplTest {
     @InjectMocks
     private DepartmentServiceImpl departmentService;
 
-    @Test
-    void sumSalaryOfDepartment() {
-        when(employeeServiceMock.add(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1)).thenReturn(new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1));
-        when(employeeServiceMock.find(FIRST_NAME1, LAST_NAME1)).thenReturn(new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1));
-        when(employeeServiceMock.remove(FIRST_NAME1, LAST_NAME1)).thenReturn(new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1));
-
-        assertEquals(new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1), departmentService.findByDepartment(1));
-
-        assertEquals(TEAM_NAME_1, out.add(TEAM_NAME_1));
-        assertEquals(TEAM_NAME_1, out.find(TEAM_NAME_1));
-        assertEquals(TEAM_NAME_1, out.remove(TEAM_NAME_1));
-
-        verify(repositoryMock, times(1)).add(TEAM_NAME_1);
-        verify(repositoryMock, times(1)).find(TEAM_NAME_1);
-        verify(repositoryMock, times(1)).remove(TEAM_NAME_1);
-    }
-
-    @Test
-    void findByMaxSalaryOfDepartment() {
-    }
-
-    @Test
-    void findByMinSalaryOfDepartment() {
-    }
-
-    @Test
-    void findByDepartment() {
+    @BeforeEach
+    public void setUp() {
+        departmentService = new DepartmentServiceImpl(employeeServiceMock);
     }
 
     @Test
     void findAll() {
+        when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
+        Map<Integer, List<Employee>> actual = departmentService.findAll();
+        assertEquals(GROUPED_EMPLOYEES, actual);
+    }
+
+    @Test
+    void shouldReturnSumSalaryOfDepartment() {
+        when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
+        assertEquals(DEPARTMENT1_SALARY, departmentService.sumSalaryOfDepartment(DEPARTMENT1));
+    }
+
+    @Test
+    void findByMaxSalaryOfDepartment() {
+        when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
+        assertEquals(EMPLOYEE_MAX_SALARY, departmentService.findByMaxSalaryOfDepartment(DEPARTMENT4));
+    }
+
+    @Test
+    void findByMinSalaryOfDepartment() {
+        when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
+        assertEquals(EMPLOYEE_MIN_SALARY, departmentService.findByMinSalaryOfDepartment(DEPARTMENT1));
+    }
+
+    @Test
+    void findByDepartment() {
+        when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
+        assertEquals(EMPLOYEES_DEPARTMENT_1, departmentService.findByDepartment(DEPARTMENT1));
     }
 }
