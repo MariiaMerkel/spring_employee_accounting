@@ -7,7 +7,7 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 import ru.merkel.springemployeeaccounting.services.EmployeeService;
 
 @RestController
-@RequestMapping(value="/employee")
+@RequestMapping(value = "/employee")
 public class EmployeeController {
 
     private final EmployeeService employeeService;

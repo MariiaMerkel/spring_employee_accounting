@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.*;
 import ru.merkel.springemployeeaccounting.models.Employee;
+
 import static org.apache.commons.lang3.StringUtils.*;
+
 import java.util.*;
 
 @Primary
@@ -53,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private String validateName(String firstName, String lastName) {
         firstName = firstName.trim();
         lastName = lastName.trim();
-        if(!isAlpha(firstName) || !isAlpha(lastName)){
+        if (!isAlpha(firstName) || !isAlpha(lastName)) {
             throw new EmployeeInvalidateException("Некорректное имя или фамилия");
         }
         return capitalize(firstName.toLowerCase()) + ' ' + capitalize(lastName.toLowerCase());

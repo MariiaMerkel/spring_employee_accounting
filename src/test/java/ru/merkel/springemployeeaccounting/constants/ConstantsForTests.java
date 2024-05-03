@@ -2,9 +2,7 @@ package ru.merkel.springemployeeaccounting.constants;
 
 import ru.merkel.springemployeeaccounting.models.Employee;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ConstantsForTests {
@@ -42,11 +40,12 @@ public class ConstantsForTests {
     public static final Employee EMPLOYEE_4 = new Employee(FIRST_NAME4, LAST_NAME4, SALARY4, DEPARTMENT4);
     public static final Employee EMPLOYEE_5 = new Employee(NOT_FORMATTED_FIRST_NAME1, NOT_FORMATTED_LAST_NAME1, SALARY2, DEPARTMENT1);
     public static final Employee EMPLOYEE_6 = new Employee(NOT_FORMATTED_FIRST_NAME4, NOT_FORMATTED_LAST_NAME4, SALARY3, DEPARTMENT1);
-    public static final String EMPLOYEE_MIN_SALARY = "Сотрудник с наименьшей зарплатой отдела №1: ФИО сотрудника: Иван Иванов, отдел: 1, зарплата: 100 000,00 ₽.";
-    public static final String EMPLOYEE_MAX_SALARY = "Сотрудник с наибольшей зарплатой отдела №4: ФИО сотрудника: Николай Николаев, отдел: 4, зарплата: 250 000,00 ₽.";
+    public static final String EMPLOYEE_MIN_SALARY = "Сотрудник с наименьшей зарплатой отдела №1: ФИО сотрудника: Иван Иванов, отдел: 1, зарплата: 100 000,00 ₽.";
+    public static final String EMPLOYEE_MAX_SALARY = "Сотрудник с наибольшей зарплатой отдела №4: ФИО сотрудника: Николай Николаев, отдел: 4, зарплата: 250 000,00 ₽.";
 
     public static final List<Employee> EMPLOYEES = List.of(EMPLOYEE_1, EMPLOYEE_2, EMPLOYEE_3, EMPLOYEE_4, EMPLOYEE_5, EMPLOYEE_6);
     public static final Map<Integer, List<Employee>> GROUPED_EMPLOYEES = EMPLOYEES.stream().collect(Collectors.groupingBy(Employee::getDepartment));
     public static final Collection<Employee> EMPLOYEES_DEPARTMENT_1 = EMPLOYEES.stream().filter(e -> e.getDepartment().equals(DEPARTMENT1)).collect(Collectors.toSet());
+    public static final Collection<Employee> EMPLOYEES_FOR_EMPLOYEE_SERVICE = Collections.unmodifiableCollection(List.of(EMPLOYEE_2, EMPLOYEE_1, EMPLOYEE_3));
     public static final String DEPARTMENT1_SALARY = "Сумма зарплат отдела №1: 450000";
 }

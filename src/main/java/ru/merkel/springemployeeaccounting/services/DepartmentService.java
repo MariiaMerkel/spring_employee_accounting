@@ -5,7 +5,6 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface DepartmentService {
     String findByMaxSalaryOfDepartment(Integer department);
@@ -16,5 +15,5 @@ public interface DepartmentService {
 
     Map<Integer, List<Employee>> findAll();
 
-    String  sumSalaryOfDepartment(Integer id);
+    String sumSalaryOfDepartment(Integer id);
 }

@@ -17,7 +17,6 @@ import static ru.merkel.springemployeeaccounting.constants.ConstantsForTests.*;
 class EmployeeServiceImplTest {
     private EmployeeService employeeService;
     private Map<String, Employee> employees = new HashMap<>();
-    private Collection<Employee> employeeCollection;
 
     @BeforeEach
     @MethodSource("provideParamsForAdd")
@@ -26,22 +25,12 @@ class EmployeeServiceImplTest {
         employeeService.add(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1);
         employeeService.add(FIRST_NAME2, LAST_NAME2, SALARY2, DEPARTMENT2);
         employeeService.add(FIRST_NAME3, LAST_NAME3, SALARY3, DEPARTMENT3);
-
-        Employee employee1 = new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1);
-        Employee employee2 = new Employee(FIRST_NAME2, LAST_NAME2, SALARY2, DEPARTMENT2);
-        Employee employee3 = new Employee(FIRST_NAME3, LAST_NAME3, SALARY3, DEPARTMENT3);
-
-        employees.put(employee1.toString(), employee1);
-        employees.put(employee2.toString(), employee2);
-        employees.put(employee3.toString(), employee3);
-        employeeCollection = Collections.unmodifiableCollection(employees.values());
     }
 
     @Test
     void shouldReturnAddedEmployee() {
         Employee actual = employeeService.add(FIRST_NAME4, LAST_NAME4, SALARY4, DEPARTMENT4);
-        Employee expected = new Employee(FIRST_NAME4, LAST_NAME4, SALARY4, DEPARTMENT4);
-        assertEquals(expected, actual);
+        assertEquals(EMPLOYEE_4, actual);
     }
 
     @Test
@@ -53,11 +42,11 @@ class EmployeeServiceImplTest {
     void shouldReturnAlreadyAddedExceptionByAdding() {
         assertThrows(EmployeeAlreadyAddedException.class, () -> employeeService.add(FIRST_NAME3, LAST_NAME3, SALARY3, DEPARTMENT3));
     }
+
     @Test
     void shouldReturnDeletedEmployee() {
-        Employee actual = employeeService.remove(NOT_FORMATTED_FIRST_NAME1, NOT_FORMATTED_LAST_NAME1);
-        Employee expected = new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1);
-        assertEquals(expected, actual);
+        Employee actual = employeeService.remove(FIRST_NAME1, LAST_NAME1);
+        assertEquals(EMPLOYEE_1, actual);
         assertThrows(EmployeeNotFoundException.class, () -> employeeService.remove(FIRST_NAME1, LAST_NAME1));
     }
 
@@ -73,9 +62,8 @@ class EmployeeServiceImplTest {
 
     @Test
     void shouldReturnFoundEmployee() {
-        Employee expected = new Employee(FIRST_NAME1, LAST_NAME1, SALARY1, DEPARTMENT1);
-        Employee actual = employeeService.find(NOT_FORMATTED_FIRST_NAME1, NOT_FORMATTED_LAST_NAME1);
-        assertEquals(expected, actual);
+        Employee actual = employeeService.find(FIRST_NAME2, LAST_NAME2);
+        assertEquals(EMPLOYEE_2, actual);
     }
 
     @Test
@@ -91,6 +79,10 @@ class EmployeeServiceImplTest {
     @Test
     void findAll() {
         Collection<Employee> actual = employeeService.findAll();
-        assertEquals(employeeCollection, actual);
+        Object[] expectedArray = EMPLOYEES_FOR_EMPLOYEE_SERVICE.toArray();
+        Object[] actualArray = actual.toArray();
+        for (int i = 0; i < EMPLOYEES_FOR_EMPLOYEE_SERVICE.size(); i++) {
+            assertEquals(expectedArray[i], actualArray[i]);
+        }
     }
 }

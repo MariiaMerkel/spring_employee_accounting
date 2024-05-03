@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.merkel.springemployeeaccounting.services.DepartmentService;
 
 @RestController
-@RequestMapping(value="/department")
+@RequestMapping(value = "/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -18,14 +18,17 @@ public class DepartmentController {
     public ResponseEntity<?> sumSalaryOfDepartment(@PathVariable Integer id) {
         return ResponseEntity.ok().body(departmentService.sumSalaryOfDepartment(id));
     }
+
     @GetMapping(path = "/{id}/salary/max")
     public ResponseEntity<?> findByMaxSalaryOfDepartment(@PathVariable Integer id) {
         return ResponseEntity.ok().body(departmentService.findByMaxSalaryOfDepartment(id));
     }
+
     @GetMapping(path = "/{id}/salary/min")
     public ResponseEntity<?> findByMinSalaryOfDepartment(@PathVariable Integer id) {
         return ResponseEntity.ok().body(departmentService.findByMinSalaryOfDepartment(id));
     }
+
     @GetMapping(path = "/employees")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok().body(departmentService.findAll());
