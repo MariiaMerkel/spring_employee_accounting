@@ -1,19 +1,33 @@
 package ru.merkel.springemployeeaccounting.services;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
 import ru.merkel.springemployeeaccounting.models.Employee;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
-public class SetBasedDepartmentServiceImpl implements DepartmentService {
+public class DepartmentServiceImpl implements DepartmentService{
 
-    private final SetBasedEmployeeServiceImpl employeeService;
+    private final EmployeeServiceImpl employeeService;
 
-    public SetBasedDepartmentServiceImpl(SetBasedEmployeeServiceImpl employeeService) {
+    public DepartmentServiceImpl(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @Override
+    public String sumSalaryOfDepartment(Integer department) {
+        AtomicReference<Integer> sum = new AtomicReference<>(0);
+        Collection<Employee> employeesDep = findByDepartment(department);
+        employeesDep.forEach(e -> {
+            sum.set(sum.get() + e.getSalary());
+        });
+        return String.format("Сумма зарплат отдела №%d: %s", department, sum);
     }
 
     @Override
