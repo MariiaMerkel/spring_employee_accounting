@@ -24,11 +24,6 @@ class DepartmentServiceImplTest {
     @InjectMocks
     private DepartmentServiceImpl departmentService;
 
-    @BeforeEach
-    public void setUp() {
-        departmentService = new DepartmentServiceImpl(employeeServiceMock);
-    }
-
     @Test
     void findAll() {
         when(employeeServiceMock.findAll()).thenReturn(EMPLOYEES);
