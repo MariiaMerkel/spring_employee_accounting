@@ -1,21 +1,26 @@
 package ru.merkel.springemployeeaccounting.services;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeAlreadyAddedException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeInvalidateException;
 import ru.merkel.springemployeeaccounting.excaptions.EmployeeNotFoundException;
+import ru.merkel.springemployeeaccounting.excaptions.EmployeeStorageIsFullException;
 import ru.merkel.springemployeeaccounting.models.Employee;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.merkel.springemployeeaccounting.constants.ConstantsForTests.*;
 
 class EmployeeServiceImplTest {
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeService;
     private Map<String, Employee> employees = new HashMap<>();
 
     @BeforeEach
@@ -41,6 +46,13 @@ class EmployeeServiceImplTest {
     @Test
     void shouldReturnAlreadyAddedExceptionByAdding() {
         assertThrows(EmployeeAlreadyAddedException.class, () -> employeeService.add(FIRST_NAME3, LAST_NAME3, SALARY3, DEPARTMENT3));
+    }
+
+    @Test
+    void shouldReturnStorageIsFullExceptionByAdding() {
+        employeeService.add(NOT_FORMATTED_FIRST_NAME1, NOT_FORMATTED_LAST_NAME1, SALARY3, DEPARTMENT3);
+        employeeService.add(NOT_FORMATTED_FIRST_NAME4, NOT_FORMATTED_LAST_NAME4, SALARY4, DEPARTMENT3);
+        assertThrows(EmployeeStorageIsFullException.class, () -> employeeService.add(FIRST_NAME3, LAST_NAME3, SALARY3, DEPARTMENT3));
     }
 
     @Test
@@ -79,10 +91,6 @@ class EmployeeServiceImplTest {
     @Test
     void findAll() {
         Collection<Employee> actual = employeeService.findAll();
-        Object[] expectedArray = EMPLOYEES_FOR_EMPLOYEE_SERVICE.toArray();
-        Object[] actualArray = actual.toArray();
-        for (int i = 0; i < EMPLOYEES_FOR_EMPLOYEE_SERVICE.size(); i++) {
-            assertEquals(expectedArray[i], actualArray[i]);
-        }
+        assertThat(actual, Matchers.containsInAnyOrder(EMPLOYEE_1, EMPLOYEE_2, EMPLOYEE_3));
     }
 }
