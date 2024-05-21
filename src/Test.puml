@@ -1,0 +1,74 @@
+@startuml
+
+package services {
+
+    interface EmployeeService {
+        Employee add(String firstName, String lastName, Integer salary, Integer department)
+        Employee remove(String firstName, String lastName)
+        Employee find(String firstName, String lastName)
+        Collection<Employee> findAll()
+    }
+    class EmployeeServiceImpl {
+        - Map<String, Employee> employees
+        -{static} int counter = 5
+        + Employee add(String firstName, String lastName, Integer salary, Integer department)
+        + Employee remove(String firstName, String lastName)
+        + Employee find(String firstName, String lastName)
+        + Collection<Employee> findAll()
+        - String validateName(String firstName, String lastName)
+    }
+    EmployeeServiceImpl ..|> EmployeeService
+
+    interface DepartmentService {
+        String findByMaxSalaryOfDepartment(Integer department)
+        String findByMinSalaryOfDepartment(Integer department)
+        Collection<Employee> findByDepartment(Integer department)
+        Map<Integer, List<Employee>> findAll()
+        String sumSalaryOfDepartment(Integer id)
+    }
+    class DepartmentServiceImpl {
+        - EmployeeServiceImpl employeeService
+
+        String findByMaxSalaryOfDepartment(Integer department)
+        String findByMinSalaryOfDepartment(Integer department)
+        Collection<Employee> findByDepartment(Integer department)
+        Map<Integer, List<Employee>> findAll()
+        String sumSalaryOfDepartment(Integer id)
+    }
+    DepartmentServiceImpl ..|> DepartmentService
+    DepartmentServiceImpl -> EmployeeServiceImpl
+
+
+}
+
+package models {
+    class Employee {
+        - String firstName
+        - String lastName
+        - Integer salary
+        - Integer department
+        -{static} NumberFormat NUMBER_FORMAT
+        + String getFullName()
+        + String getSalaryStringFormat()
+        + void setSalary(Integer salary)
+        + Integer getDepartment()
+        + void setDepartment(Integer department)
+    }
+    EmployeeServiceImpl -> Employee
+}
+
+package controllers {
+    class EmployeeController {
+    - EmployeeService employeeService
+    + Employee add(String firstName, String lastName, Integer salary, Integer departmentId)
+    + ResponseEntity<?> remove(String firstName, lastName)
+    + ResponseEntity<?> find(String firstName, String lastName)
+    }
+    EmployeeController -> EmployeeService
+}
+
+
+
+
+
+@enduml

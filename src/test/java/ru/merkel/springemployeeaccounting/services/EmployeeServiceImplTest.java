@@ -13,6 +13,7 @@ import ru.merkel.springemployeeaccounting.models.Employee;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +22,6 @@ import static ru.merkel.springemployeeaccounting.constants.ConstantsForTests.*;
 
 class EmployeeServiceImplTest {
     private EmployeeServiceImpl employeeService;
-    private Map<String, Employee> employees = new HashMap<>();
 
     @BeforeEach
     @MethodSource("provideParamsForAdd")
@@ -90,6 +90,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void findAll() {
+        Stream
         Collection<Employee> actual = employeeService.findAll();
         assertThat(actual, Matchers.containsInAnyOrder(EMPLOYEE_1, EMPLOYEE_2, EMPLOYEE_3));
     }
