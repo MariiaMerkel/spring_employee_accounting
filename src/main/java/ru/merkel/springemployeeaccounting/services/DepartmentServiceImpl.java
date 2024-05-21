@@ -21,16 +21,6 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
-    public String sumSalaryOfDepartment(Integer department) {
-        AtomicReference<Integer> sum = new AtomicReference<>(0);
-        Collection<Employee> employeesDep = findByDepartment(department);
-        employeesDep.forEach(e -> {
-            sum.set(sum.get() + e.getSalary());
-        });
-        return String.format("Сумма зарплат отдела №%d: %s", department, sum);
-    }
-
-    @Override
     public String findByMaxSalaryOfDepartment(Integer department) {
         Collection<Employee> employeesDep = findByDepartment(department);
         Employee employee = employeesDep.stream().max(Comparator.comparing(Employee::getSalary)).orElseThrow(() -> new EmployeeNotFoundException("Ни один сотрудник в этом отделе не найден"));
@@ -52,5 +42,15 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public Map<Integer, List<Employee>> findAll() {
         return employeeService.findAll().stream().collect(Collectors.groupingBy(Employee::getDepartment));
+    }
+
+    @Override
+    public String sumSalaryOfDepartment(Integer department) {
+        AtomicReference<Integer> sum = new AtomicReference<>(0);
+        Collection<Employee> employeesDep = findByDepartment(department);
+        employeesDep.forEach(e -> {
+            sum.set(sum.get() + e.getSalary());
+        });
+        return String.format("Сумма зарплат отдела №%d: %s", department, sum);
     }
 }
