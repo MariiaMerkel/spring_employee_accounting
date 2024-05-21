@@ -90,7 +90,6 @@ class EmployeeServiceImplTest {
 
     @Test
     void findAll() {
-        Stream
         Collection<Employee> actual = employeeService.findAll();
         assertThat(actual, Matchers.containsInAnyOrder(EMPLOYEE_1, EMPLOYEE_2, EMPLOYEE_3));
     }
